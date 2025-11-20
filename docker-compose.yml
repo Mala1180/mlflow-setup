@@ -2,15 +2,20 @@ services:
 
   mlflow-db:
     image: postgres
-    container_name: postgres
+    container_name: ${POSTGRES_CONTAINER}
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=mlflow_db
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
 
   minio:
     image: minio/minio
@@ -21,24 +26,49 @@ services:
     volumes:
       - minio_data:/data
     environment:
-      MINIO_ROOT_USER: masoud
-      MINIO_ROOT_PASSWORD: Strong#Pass#2022
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_STORAGE_USE_HTTPS: false
     command: server --console-address ":9001" /data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 2s
+      timeout: 10s
+      retries: 10
+
+  minio-setup:
+    image: minio/mc
+    depends_on:
+      minio:
+        condition: service_healthy
+    volumes:
+      - ./minio/setup.sh:/setup.sh
+    entrypoint: /bin/sh
+    command: -c "chmod +x /setup.sh && /setup.sh"
+    environment:
+      - MINIO_ROOT_USER=${MINIO_ROOT_USER}
+      - MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD}
 
   mlflow:
-    image: inseefrlab/mlflow:latest
+    build:
+      context: .
     container_name: mlflow-server
     restart: always
     depends_on:
-      - mlflow-db
-      - minio
+      mlflow-db: 
+        condition: service_healthy
+      minio-setup:
+        condition: service_completed_successfully
+    # environment:
+    #   AWS_ACCESS_KEY_ID: ${MINIO_ACCESS_KEY_ID}
+    #   AWS_SECRET_ACCESS_KEY: ${MINIO_SECRET_ACCESS_KEY}
+    #   MLFLOW_S3_ENDPOINT_URL: ${MLFLOW_S3_ENDPOINT_URL}
     ports:
       - "4000:5000"
-    volumes:
-      - ./mlflow/artifacts:/mlflow/artifacts
     command: >
-      --backend-store-uri postgresql://postgres:postgres@postgres:5432/mlflow_db 
-      --default-artifact-root /mlflow/artifacts
+      poetry run mlflow server
+      --backend-store-uri postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_CONTAINER}:${POSTGRES_PORT}/${POSTGRES_DB}
+      --default-artifact-root s3://${BUCKET_NAME}
       --host 0.0.0.0
       
 volumes:
