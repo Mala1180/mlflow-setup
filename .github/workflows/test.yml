@@ -1,0 +1,30 @@
+name: CI/CD
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths-ignore:
+      - '.gitignore'
+      - '.mergify.yml'
+      - 'CHANGELOG.md'
+      - 'LICENSE'
+      - 'README.md'
+      - 'renovate.json'
+  pull_request:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Preliminary Checks
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # all history
+
+      - name: Build and start service
+        run: docker compose up -d --build
+
+      - name: Tear down service
+        run: docker compose down -v
+    
