@@ -12,9 +12,16 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt && \
     poetry install
 
-CMD [ "poetry", "run", "mlflow", "server" ]
+COPY mlflow ./mlflow
+COPY create_users.py ./create_users.py
+COPY startup.sh ./startup.sh
+
+RUN chmod +x ./mlflow/server/auth/replace-env-vars.sh && \
+    chmod +x ./startup.sh
+
+ENTRYPOINT [ "./startup.sh" ]
+
