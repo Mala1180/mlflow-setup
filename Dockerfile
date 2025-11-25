@@ -17,7 +17,6 @@ RUN pip install --upgrade pip && \
     poetry install
 
 COPY mlflow ./mlflow
-COPY create_users.py ./create_users.py
 COPY startup.sh ./startup.sh
 
 RUN chmod +x ./mlflow/server/auth/replace-env-vars.sh && \

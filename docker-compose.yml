@@ -56,8 +56,8 @@ services:
     depends_on:
       mlflow-db: 
         condition: service_healthy
-      minio-setup:
-        condition: service_completed_successfully
+      # minio-setup:
+      #   condition: service_completed_successfully
     environment:
       MLFLOW_FLASK_SERVER_SECRET_KEY: ${MLFLOW_SECRET_KEY}
       MLFLOW_AUTH_CONFIG_PATH: mlflow/server/auth/basic_auth.ini
