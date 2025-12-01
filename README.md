@@ -27,7 +27,7 @@ In this setup, we use **PostgreSQL** as the backend store and **MinIO** (an S3-c
 
 ## Starting the MLflow Server
 
-- Create a `.env` file in the root directory based on the provided `.env.example` file and customize the environment variables as needed.
+- Create a `.env` file in the root directory based on the provided `.server.env` file and customize the environment variables as needed.
     ```bash
     cp .env.example .env
     ```
