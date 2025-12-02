@@ -1,14 +1,19 @@
 import os
+from pathlib import Path
 
 import pytest
+from dotenv import load_dotenv
 from mlflow import MlflowClient
 from mlflow.entities import Run, Experiment
 from mlflow.server.auth.client import AuthServiceClient
-from python_on_whales import DockerClient
 from mlflow.server.auth.entities import ExperimentPermission
-from tests.env import load_env_vars
+from python_on_whales import DockerClient
 
-load_env_vars()
+client_env_path = Path(os.getcwd()) / ".client.env"
+server_env_path = Path(os.getcwd()) / ".server.env"
+
+load_dotenv(client_env_path, override=False)
+load_dotenv(server_env_path, override=False)
 
 users = [
     {"username": "user1", "password": "user1password"},

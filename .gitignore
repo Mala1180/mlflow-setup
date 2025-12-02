@@ -136,6 +136,8 @@ celerybeat.pid
 
 # Environments
 .env
+.new-user.env
+!/env-examples/*
 .envrc
 .venv
 env/

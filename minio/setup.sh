@@ -10,11 +10,6 @@ mc alias set minioserver http://minio:9000 ${MINIO_ROOT_USER} ${MINIO_ROOT_PASSW
 # Create the MLFlow bucket
 mc mb --ignore-existing "minioserver/${MINIO_MLFLOW_BUCKET}"
 
-# Create a user for MLFlow
-# mc admin user add minioserver ${MINIO_USER_MATTIA} ${MINIO_USER_MATTIA_PASSWORD}
-# mc admin policy attach minioserver readwrite --user=${MINIO_USER_MATTIA}
-
-
 # Loop through all USER_* variables that are NOT *_PASSWORD
 for var in $(compgen -A variable); do
 

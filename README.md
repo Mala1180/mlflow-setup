@@ -6,13 +6,14 @@ Mlflow uses two types of storage backends:
 
 1. _Backend Store_: A database to store experiment and run metadata.
 
-   - MySQL, MSSQL, SQLite and PostgreSQL.
+    - MySQL, MSSQL, SQLite and PostgreSQL.
 
 2. _Artifact Store_: A location to store artifacts like models, plots, and data files.
-   - Local filesystem, Amazon S3 and S3-compatible storage, Azure Blob Storage, Google Cloud Storage, FTP and SFTP Server, NFS and HDFS.
+    - Local filesystem, Amazon S3 and S3-compatible storage, Azure Blob Storage, Google Cloud Storage, FTP and SFTP
+      Server, NFS and HDFS.
 
-In this setup, we use **PostgreSQL** as the backend store and **MinIO** (an S3-compatible object storage) as the artifact store.
-
+In this setup, we use **PostgreSQL** as the backend store and **MinIO** (an S3-compatible object storage) as the
+artifact store.
 
 ## Prerequisites
 
@@ -24,19 +25,20 @@ In this setup, we use **PostgreSQL** as the backend store and **MinIO** (an S3-c
     - Python 3.9+
     - MLflow Python package
 
-
 ## Starting the MLflow Server
 
-- Create a `.env` file in the root directory based on the provided `.server.env` file and customize the environment variables as needed.
+- Create a `.env` file in the root directory based on the provided `.server.env` file and customize the environment
+  variables as needed.
     ```bash
-    cp .env.example .env
+    cp .env.server .env
     ```
 - Start the services using Docker Compose:
     ```bash
     docker compose up -d
     ```
 
-- Access the MLflow UI at [http://localhost:4000](http://localhost:4000) or MinIO UI at [http://localhost:9000](http://localhost:9000)
+- Access the MLflow UI at [http://localhost:4000](http://localhost:4000) or MinIO UI
+  at [http://localhost:9000](http://localhost:9000)
 
 ## Client Usage
 
@@ -84,6 +86,26 @@ In this setup, we use **PostgreSQL** as the backend store and **MinIO** (an S3-c
     lr.fit(X_train, y_train)
     ```
 
+## Server Configuration
+
+### Adding New Users
+
+1. Create a `.new-user.env` file based on the provided `.new-user.env` template:
+    ```bash
+    cp env-examples/.new-user.env .new-user.env
+    ```
+   > `.new-user.env` file must be located in the root directory of the project.
+
+2. To add new users to the MLflow server, run the python script provided:
+    ```bash
+    poetry run python adduser.py
+    ```
+3. To add new users to the MinIO instance, you can run a script inside the MinIO container:
+    ```bash
+    docker exec -it minio bash /minio/add-user.sh
+    ```
+
+   
 ## License
 
 This project is licensed under the MIT License.
