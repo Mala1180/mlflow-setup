@@ -26,6 +26,7 @@ services:
     volumes:
       - minio_data:/data
       - ./minio:/minio
+      - .new-user.env:/.new-user.env
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
@@ -58,6 +59,8 @@ services:
         condition: service_healthy
       # minio-setup:
       #   condition: service_completed_successfully
+    volumes:
+      - .new-user.env:/mlflow/.new-user.env
     environment:
       MLFLOW_FLASK_SERVER_SECRET_KEY: ${MLFLOW_SECRET_KEY}
       MLFLOW_AUTH_CONFIG_PATH: mlflow/server/auth/basic_auth.ini
@@ -68,6 +71,7 @@ services:
       POSTGRES_CONTAINER: ${POSTGRES_CONTAINER}
       MLFLOW_ADMIN_USER: ${MLFLOW_ADMIN_USER}
       MLFLOW_ADMIN_PASSWORD: ${MLFLOW_ADMIN_PASSWORD}
+      MLFLOW_TRACKING_URI: "http://localhost:${MLFLOW_PORT}"
     ports:
       - "${MLFLOW_PORT}:${MLFLOW_PORT}"
     command: >

@@ -1,6 +1,5 @@
 #!/bin/bash
 
-source .env
 source .new-user.env
 
 echo "New user to add: ${NEW_USER} ${NEW_USER_PASSWORD}"

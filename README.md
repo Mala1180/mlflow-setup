@@ -98,7 +98,7 @@ artifact store.
 
 2. To add new users to the MLflow server, run the python script provided:
     ```bash
-    poetry run python adduser.py
+    docker exec -it mlflow-server sh -c "poetry run python mlflow/adduser.py"
     ```
 3. To add new users to the MinIO instance, you can run a script inside the MinIO container:
     ```bash
