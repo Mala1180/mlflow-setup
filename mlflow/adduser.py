@@ -27,3 +27,5 @@ exp_id: str = admin_mlflow_client.create_experiment(user["experiment"])
 ep: ExperimentPermission = auth_client.create_experiment_permission(
     exp_id, user["username"], user["permission"]
 )
+
+print(f"User '{user['username']}' added with '{user['permission']}' permission on experiment '{user['experiment']}'")
