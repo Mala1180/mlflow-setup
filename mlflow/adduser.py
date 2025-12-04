@@ -19,6 +19,8 @@ user = {
     "permission": os.environ["NEW_USER_PERMISSION"],
 }
 
+print(f"Adding user {user["username"]}")
+
 auth_client = AuthServiceClient(os.environ["MLFLOW_TRACKING_URI"])
 admin_mlflow_client = MlflowClient(os.environ["MLFLOW_TRACKING_URI"])
 
