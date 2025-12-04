@@ -6,7 +6,7 @@ from mlflow import MlflowClient
 from mlflow.server.auth.client import AuthServiceClient
 from mlflow.server.auth.entities import ExperimentPermission
 
-new_user_env_path = Path(os.getcwd()) / ".new-user.env"
+new_user_env_path = Path(os.getcwd()) / "config" / ".new-user.env"
 env_path = Path(os.getcwd()) / ".env"
 
 load_dotenv(env_path, override=False)

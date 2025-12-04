@@ -92,7 +92,8 @@ artifact store.
 
 1. Create a `.new-user.env` file based on the provided `.new-user.env` template:
     ```bash
-    cp env-examples/.new-user.env .new-user.env
+    mkdir config
+    cp env-examples/.new-user.env config/.new-user.env
     ```
    > `.new-user.env` file must be located in the root directory of the project.
 
