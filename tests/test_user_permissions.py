@@ -9,10 +9,7 @@ from mlflow.server.auth.client import AuthServiceClient
 from mlflow.server.auth.entities import ExperimentPermission
 from python_on_whales import DockerClient
 
-client_env_path = Path(os.getcwd()) / "env-examples" / ".client.env"
 server_env_path = Path(os.getcwd()) / "env-examples" / ".server.env"
-
-load_dotenv(client_env_path, override=False)
 load_dotenv(server_env_path, override=False)
 
 users = [
