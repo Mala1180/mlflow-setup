@@ -28,7 +28,9 @@ admin_mlflow_client = MlflowClient(os.environ["MLFLOW_TRACKING_URI"])
 
 auth_client.update_user_password(user["username"], user["password"])
 
-exp: Optional[Experiment] = admin_mlflow_client.get_experiment_by_name(user["experiment"])
+exp: Optional[Experiment] = admin_mlflow_client.get_experiment_by_name(
+    user["experiment"]
+)
 if exp is None:
     exp_id: str = admin_mlflow_client.create_experiment(user["experiment"])
     ep: ExperimentPermission = auth_client.create_experiment_permission(

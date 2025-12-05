@@ -2,7 +2,7 @@
 
 source config/.user.env
 
-echo "New user to add: ${NEW_USER} ${NEW_USER_PASSWORD}"
+echo "New user to add: ${NEW_USER}"
 
 mc alias set minioserver http://minio:9000 "${MINIO_ROOT_USER}" "${MINIO_ROOT_PASSWORD}"
 
