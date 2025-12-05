@@ -92,8 +92,7 @@ artifact store.
 
 Create a `.user.env` file inside a `config` folder, based on the provided `env-examples/.user.env` template:
 ```bash
-mkdir config
-cp env-examples/.user.env config/.user.env
+cp config/.user.example.env config/.user.env
 ```
 > For both adding and updating users, the scripts will read from this `.user.env` file.
 
