@@ -88,24 +88,36 @@ artifact store.
 
 ## Server Configuration
 
-### Adding New Users
+### Managing Users
 
-1. Create a `.new-user.env` file based on the provided `.new-user.env` template:
-    ```bash
-    mkdir config
-    cp env-examples/.new-user.env config/.new-user.env
-    ```
-   > `.new-user.env` file must be located in the root directory of the project.
+Create a `.user.env` file inside a `config` folder, based on the provided `env-examples/.user.env` template:
+```bash
+mkdir config
+cp env-examples/.user.env config/.user.env
+```
+> For both adding and updating users, the scripts will read from this `.user.env` file.
 
-2. To add new users to the MLflow server, run the python script provided:
+#### Adding New Users
+
+1. To add new users to the MLflow server, run the python script provided:
     ```bash
     docker exec -it mlflow-server sh -c "poetry run python mlflow/adduser.py"
     ```
-3. To add new users to the MinIO instance, you can run a script inside the MinIO container:
+2. To add new users to the MinIO instance, you can run a script inside the MinIO container:
     ```bash
     docker exec -it minio bash /minio/add-user.sh
     ```
 
+#### Updating Users
+
+1. To update existing users in the MLflow server, run the python script provided:
+    ```bash
+    docker exec -it mlflow-server sh -c "poetry run python mlflow/updateuser.py"
+    ```
+2. To update existing users in the MinIO instance, you can run a script inside the MinIO container:
+    ```bash
+    docker exec -it minio bash /minio/update-user.sh
+    ```
    
 ## License
 

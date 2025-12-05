@@ -6,11 +6,11 @@ from mlflow import MlflowClient
 from mlflow.server.auth.client import AuthServiceClient
 from mlflow.server.auth.entities import ExperimentPermission
 
-new_user_env_path = Path(os.getcwd()) / "config" / ".new-user.env"
+new_user_env_path = Path(os.getcwd()) / "config" / ".user.env"
 env_path = Path(os.getcwd()) / ".env"
 
 load_dotenv(env_path, override=False)
-load_dotenv(new_user_env_path, override=False)
+load_dotenv(new_user_env_path, override=True)
 
 user = {
     "username": os.environ["NEW_USER"],

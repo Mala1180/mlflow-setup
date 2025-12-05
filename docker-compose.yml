@@ -26,7 +26,7 @@ services:
     volumes:
       - minio_data:/data
       - ./minio:/minio
-      - .new-user.env:/.new-user.env
+      - ./config:/config
     environment:
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}
       MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
