@@ -17,10 +17,9 @@ RUN pip install --upgrade pip && \
     poetry install
 
 COPY mlflow ./mlflow
-COPY startup.sh ./startup.sh
 
 RUN chmod +x ./mlflow/server/auth/replace-env-vars.sh && \
-    chmod +x ./startup.sh
+    chmod +x ./mlflow/startup.sh
 
-ENTRYPOINT [ "./startup.sh" ]
+ENTRYPOINT [ "./mlflow/startup.sh" ]
 
