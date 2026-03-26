@@ -53,7 +53,7 @@ artifact store.
     # to save artifacts to minio storage
     MLFLOW_S3_ENDPOINT_URL=http://127.0.0.1:9000
     AWS_ACCESS_KEY_ID=john
-    AWS_SECRET_ACCESS_KEY=johnpassword
+    AWS_SECRET_ACCESS_KEY=johnpassword123
     ```
 2. Use the following sample code check that everything is working correctly:
 
