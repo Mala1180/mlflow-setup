@@ -18,7 +18,7 @@ python-dotenv = "^1.2.1"
 pytest = "^9.0.1"
 python-on-whales = "^0.81.0"
 ruff = "^0.15.0"
-poethepoet = "^0.47.0"
+poethepoet = "^0.48.0"
 
 [build-system]
 requires = ["poetry-core"]
